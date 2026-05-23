@@ -92,6 +92,37 @@ window.confirmAttendance = function(button){
   }
 }
 
+window.approveRowAdvanced = function(btn, finalStatus) {
+  const row = btn.closest('tr');
+  if (!row) return;
+  const badge = row.querySelector('.status-badge');
+  const utenteNome = row.querySelector('.class-nome')?.innerText || 'Utente';
+  
+  if (!badge) return;
+
+  if (finalStatus === 'Aprovado') {
+    badge.className = 'status-badge px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 text-[10px] font-bold';
+    badge.innerText = 'Aprovado';
+    row.style.opacity = '0.7';
+    logAdminAction('STAFF', `Processo de ${utenteNome} foi deferido e assinado digitalmente.`);
+    
+    const kpiAprovados = document.getElementById('kpi-concluidos');
+    if (kpiAprovados) {
+      let current = parseInt(kpiAprovados.innerText, 10);
+      if (!Number.isNaN(current)) {
+        kpiAprovados.innerText = current + 1;
+      }
+    }
+  } else {
+    badge.className = 'status-badge px-2.5 py-1 rounded-full bg-rose-50 text-rose-800 border border-rose-200 text-[10px] font-bold';
+    badge.innerText = 'Recusado';
+    row.style.opacity = '0.7';
+    logAdminAction('STAFF', `Processo de ${utenteNome} indeferido por inconformidade técnica.`);
+  }
+
+  row.querySelectorAll('button').forEach(b => b.classList.add('opacity-40', 'pointer-events-none'));
+}
+
 // ==========================================================
 // NOVAS FUNCIONALIDADES: PAINEL ADMINISTRATIVO AVANÇADO (BACKOFFICE)
 // ==========================================================
