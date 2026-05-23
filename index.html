@@ -69,6 +69,10 @@ tailwind.config = {
           <span class="material-symbols-outlined">home</span>
           <span>Início</span>
         </button>
+        <button onclick="navigate('page-perfil-cidadao')" class="nav-btn flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all w-nowrap text-text-muted hover:bg-slate-50 w-full">
+          <span class="material-symbols-outlined">account_circle</span>
+          <span>Meu Perfil Consular</span>
+        </button>
         <button onclick="navigate('page-novo-pedido')" class="nav-btn flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all w-nowrap text-text-muted hover:bg-slate-50 w-full">
           <span class="material-symbols-outlined">add_card</span>
           <span>Novo Pedido</span>
@@ -180,6 +184,119 @@ tailwind.config = {
                 </button>
               </div>
             </div>
+          </div>
+
+        </div>
+      </section>
+
+      <section id="page-perfil-cidadao" class="page space-y-6 animate-fade-in">
+        
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border-subtle pb-4">
+          <div>
+            <h2 class="font-bold text-xl text-primary flex items-center gap-2">
+              <span class="material-symbols-outlined text-2xl">badge</span> 
+              Ficha de Inscrição Consular Digital
+            </h2>
+            <p class="text-xs text-text-muted">Consulte e atualize os seus dados de identificação registados na Embaixada na Bélgica.</p>
+          </div>
+          <div class="bg-emerald-100 text-emerald-800 border border-emerald-200 px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1">
+            <span class="material-symbols-outlined text-sm">gpp_good</span> Perfil Verificado via IA
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          
+          <div class="lg:col-span-8 space-y-6">
+            <div class="bg-surface border border-border-subtle p-6 rounded-2xl shadow-sm space-y-6">
+              
+              <div>
+                <h3 class="text-xs font-extrabold uppercase tracking-wider text-primary border-b border-slate-100 pb-2 mb-4 flex items-center gap-1.5">
+                  <span class="material-symbols-outlined text-sm">person</span> Informação de Identificação
+                </h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div class="space-y-1">
+                    <label class="text-[10px] font-bold text-text-muted uppercase">Nome Completo</label>
+                    <input type="text" value="Endson dos Santos" disabled class="w-full bg-slate-50 border border-border-subtle rounded-xl text-xs px-3 py-2 text-text-main font-semibold focus:outline-none">
+                  </div>
+                  <div class="space-y-1">
+                    <label class="text-[10px] font-bold text-text-muted uppercase">Email Eletrónico</label>
+                    <input type="email" value="endson.santos@exemplo.com" disabled class="w-full bg-slate-50 border border-border-subtle rounded-xl text-xs px-3 py-2 text-text-main font-semibold focus:outline-none">
+                  </div>
+                  <div class="space-y-1">
+                    <label class="text-[10px] font-bold text-text-muted uppercase">Nº Passaporte Ativo</label>
+                    <input type="text" value="STP002931A" disabled class="w-full bg-slate-50 border border-border-subtle rounded-xl text-xs px-3 py-2 font-mono text-text-main font-bold focus:outline-none">
+                  </div>
+                  <div class="space-y-1">
+                    <label class="text-[10px] font-bold text-text-muted uppercase">Nº Inscrição Consular</label>
+                    <input type="text" value="IC-8821-BRU" disabled class="w-full bg-slate-50 border border-border-subtle rounded-xl text-xs px-3 py-2 font-mono text-secondary font-bold focus:outline-none">
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <h3 class="text-xs font-extrabold uppercase tracking-wider text-primary border-b border-slate-100 pb-2 mb-4 flex items-center gap-1.5">
+                  <span class="material-symbols-outlined text-sm">home_pin</span> Residência Estrangeira e Emergência
+                </h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div class="space-y-1 sm:col-span-2">
+                    <label class="text-[10px] font-bold text-text-muted uppercase">Morada Atual (Bélgica)</label>
+                    <input type="text" value="Avenue Louise 120, 1050 Bruxelles, Belgique" class="w-full border border-border-subtle rounded-xl text-xs px-3 py-2 text-text-main focus:ring-primary focus:border-primary">
+                  </div>
+                  <div class="space-y-1">
+                    <label class="text-[10px] font-bold text-text-muted uppercase">Contacto Telefónico</label>
+                    <input type="text" value="+32 491 23 45 67" class="w-full border border-border-subtle rounded-xl text-xs px-3 py-2 text-text-main focus:ring-primary focus:border-primary">
+                  </div>
+                  <div class="space-y-1">
+                    <label class="text-[10px] font-bold text-text-muted uppercase">Contacto de Emergência / Familiar</label>
+                    <input type="text" value="Taynara de Oliveira (+32 491 98 76 54)" class="w-full border border-border-subtle rounded-xl text-xs px-3 py-2 text-text-main focus:ring-primary focus:border-primary">
+                  </div>
+                </div>
+              </div>
+
+              <div class="pt-2 border-t border-border-subtle flex justify-end">
+                <button onclick="saveProfileChanges()" class="bg-primary hover:bg-primary-light text-white text-xs font-bold px-5 py-2 rounded-xl transition-all shadow flex items-center gap-1.5">
+                  <span class="material-symbols-outlined text-sm">save</span> Guardar Alterações de Residência
+                </button>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="lg:col-span-4 space-y-4">
+            
+            <div class="bg-gradient-to-br from-secondary to-amber-950 text-white p-5 rounded-2xl shadow-md relative overflow-hidden group">
+              <div class="absolute -right-6 -bottom-6 text-white/5 font-bold text-9xl pointer-events-none select-none">STP</div>
+              <div class="flex justify-between items-start mb-6">
+                <div>
+                  <p class="text-[9px] uppercase font-bold tracking-widest text-amber-200">República Democrática de</p>
+                  <h4 class="font-bold text-xs tracking-wider">São Tomé e Príncipe</h4>
+                </div>
+                <span class="material-symbols-outlined text-amber-300 text-2xl">workspace_premium</span>
+              </div>
+              
+              <div class="space-y-3">
+                <div>
+                  <p class="text-[9px] text-amber-200/70 uppercase">Titular</p>
+                  <p class="text-sm font-bold tracking-wide">Endson dos Santos</p>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                  <div>
+                    <p class="text-[9px] text-amber-200/70 uppercase">Jurisdição</p>
+                    <p class="text-[11px] font-semibold">Bélgica / UE</p>
+                  </div>
+                  <div>
+                    <p class="text-[9px] text-amber-200/70 uppercase">Validade</p>
+                    <p class="text-[11px] font-semibold">31 Dez 2028</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-surface border border-border-subtle p-4 rounded-xl shadow-sm space-y-2.5 text-xs text-text-muted">
+              <h4 class="font-bold text-text-main flex items-center gap-1"><span class="material-symbols-outlined text-primary text-sm">gavel</span> Regulamento GDPR</h4>
+              <p class="leading-relaxed text-[11px]">Em conformidade com os princípios de **limitação da finalidade** e **portabilidade dos dados**, os seus ficheiros e registos biométricos são encriptados na infraestrutura consular e nunca partilhados com terceiros.</p>
+            </div>
+
           </div>
 
         </div>

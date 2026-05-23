@@ -264,3 +264,23 @@ function logAdminAction(userType, text) {
     // Insere no início da lista de logs
     container.insertBefore(logDiv, container.firstChild);
 }
+
+// Função para simular a gravação de alterações de perfil com auditoria
+window.saveProfileChanges = function() {
+    alert("Alterações de residência e contactos guardadas com sucesso no ecossistema consular!");
+    
+    // Regista o log da alteração no backoffice para rastreabilidade
+    if (typeof logAdminAction === "function") {
+        logAdminAction("UTENTE", "Endson dos Santos atualizou os dados de contacto e residência na Bélgica.");
+    }
+}
+
+// Função para simular a gravação de alterações de perfil com auditoria
+function saveProfileChanges() {
+    alert("Alterações de residência e contactos guardadas com sucesso no ecossistema consular!");
+    
+    // Regista o log da alteração no backoffice para rastreabilidade
+    if (typeof logAdminAction === "function") {
+        logAdminAction("UTENTE", "Endson dos Santos atualizou os dados de contacto e residência na Bélgica.");
+    }
+}
