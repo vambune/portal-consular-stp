@@ -75,6 +75,22 @@ window.simulateOcrScan = function(input, docId) {
             tabelaBody.insertBefore(novaLinha, tabelaBody.firstChild);
         }
 
+        // INJEÇÃO NA PÁGINA PRINCIPAL DO CIDADÃO (HOME)
+        const homeTableBody = document.querySelector("#user-process-list");
+        if (homeTableBody) {
+            const novaLinhaHome = document.createElement("tr");
+            novaLinhaHome.className = "hover:bg-slate-50/50 transition-all bg-emerald-50/20";
+            novaLinhaHome.innerHTML = `
+                <td class="p-3 font-mono text-[11px] font-bold text-text-muted">#STP-${idAleatorio}</td>
+                <td class="p-3 font-semibold">Pedido de ${atoSimulado}</td>
+                <td class="p-3 text-text-muted">Hoje</td>
+                <td class="p-3">
+                    <span class="home-status-badge px-2.5 py-1 rounded-full bg-amber-50 text-amber-800 border border-amber-200 text-[10px] font-bold">Pendente</span>
+                </td>
+            `;
+            homeTableBody.insertBefore(novaLinhaHome, homeTableBody.firstChild);
+        }
+
         const kpiPendentes = document.getElementById("kpi-pendentes-count");
         if (kpiPendentes) {
             let atuais = parseInt(kpiPendentes.innerText, 10);

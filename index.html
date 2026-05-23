@@ -65,7 +65,11 @@ tailwind.config = {
     
     <aside id="sidebar-main" class="w-full lg:w-64 bg-surface border-b lg:border-b-0 lg:border-r border-border-subtle p-4 flex flex-row lg:flex-col gap-2 overflow-x-auto lg:overflow-x-visible shrink-0">
       <div id="nav-group-cidadao" class="flex flex-row lg:flex-col gap-1 w-full">
-        <button onclick="navigate('page-novo-pedido')" class="nav-btn active flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all w-nowrap text-primary bg-slate-100 font-semibold w-full">
+        <button onclick="navigate('page-home')" class="nav-btn active flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all w-nowrap text-primary bg-slate-100 font-semibold w-full">
+          <span class="material-symbols-outlined">home</span>
+          <span>Início</span>
+        </button>
+        <button onclick="navigate('page-novo-pedido')" class="nav-btn flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all w-nowrap text-text-muted hover:bg-slate-50 w-full">
           <span class="material-symbols-outlined">add_card</span>
           <span>Novo Pedido</span>
         </button>
@@ -88,6 +92,98 @@ tailwind.config = {
     </aside>
 
     <main class="flex-1 p-4 md:p-6 max-w-7xl mx-auto w-full overflow-hidden">
+
+      <section id="page-home" class="page active space-y-6 animate-fade-in">
+        
+        <div class="bg-gradient-to-r from-primary to-emerald-950 text-white p-6 rounded-2xl shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+          <div class="space-y-1">
+            <h2 class="font-bold text-xl md:text-2xl tracking-wide">Olá, Endson dos Santos</h2>
+            <p class="text-xs text-emerald-100/90 flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-sm">verified_user</span> Perfil Consular verificado com sucesso | Último acesso hoje às 23:45
+            </p>
+          </div>
+          <div class="bg-white/10 px-4 py-2 rounded-xl border border-white/10 text-center shrink-0">
+            <p class="text-[10px] uppercase font-bold tracking-wider text-slate-300">Inscrição Consular</p>
+            <p class="text-sm font-bold text-secondary">Ativa (#STP-8821)</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          
+          <div class="lg:col-span-8 space-y-4">
+            <div class="bg-surface border border-border-subtle rounded-2xl shadow-sm overflow-hidden">
+              <div class="p-4 border-b border-border-subtle bg-slate-50/50 flex items-center justify-between">
+                <h3 class="font-bold text-sm text-text-main flex items-center gap-2">
+                  <span class="material-symbols-outlined text-primary text-lg">folder_shared</span> Os Meus Processos e Pedidos Recentes
+                </h3>
+                <span class="text-[11px] font-semibold text-text-muted">A acompanhar em tempo real</span>
+              </div>
+              
+              <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs border-collapse" id="user-home-table">
+                  <thead>
+                    <tr class="bg-slate-50 border-b border-border-subtle text-text-muted uppercase text-[10px] font-bold">
+                      <th class="p-3">Referência</th>
+                      <th class="p-3">Ato / Serviço</th>
+                      <th class="p-3">Data de Submissão</th>
+                      <th class="p-3">Estado Atual</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-border-subtle text-text-main" id="user-process-list">
+                    <tr class="hover:bg-slate-50/50 transition-all">
+                      <td class="p-3 font-mono text-[11px] font-bold text-text-muted">#STP-9831</td>
+                      <td class="p-3 font-semibold">Renovação de Passaporte Ordinário</td>
+                      <td class="p-3 text-text-muted">23 Mai 2026</td>
+                      <td class="p-3">
+                        <span class="home-status-badge px-2.5 py-1 rounded-full bg-amber-50 text-amber-800 border border-amber-200 text-[10px] font-bold">Pendente</span>
+                      </td>
+                    </tr>
+                    <tr class="hover:bg-slate-50/50 transition-all">
+                      <td class="p-3 font-mono text-[11px] font-bold text-text-muted">#STP-7612</td>
+                      <td class="p-3 font-semibold">Inscrição Consular Obrigatória</td>
+                      <td class="p-3 text-text-muted">15 Fev 2026</td>
+                      <td class="p-3">
+                        <span class="px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 text-[10px] font-bold">Concluído</span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="lg:col-span-4 space-y-4">
+            <div class="bg-surface border border-border-subtle p-5 rounded-2xl shadow-sm space-y-4">
+              <h3 class="font-bold text-xs md:text-sm text-text-main uppercase tracking-wider text-text-muted">Ações Disponíveis</h3>
+              
+              <div class="space-y-2">
+                <button onclick="navigate('page-novo-pedido')" class="w-full flex items-center justify-between p-3 border border-border-subtle rounded-xl hover:bg-slate-50 transition-all text-left group">
+                  <div class="flex items-center gap-3">
+                    <span class="material-symbols-outlined text-primary bg-emerald-50 p-2 rounded-lg">add_card</span>
+                    <div>
+                      <h4 class="font-bold text-xs text-text-main">Solicitar Novo Documento</h4>
+                      <p class="text-[10px] text-text-muted">Iniciar pedido de visto, certidões ou atos.</p>
+                    </div>
+                  </div>
+                  <span class="material-symbols-outlined text-slate-400 group-hover:translate-x-0.5 transition-transform text-sm">arrow_forward_ios</span>
+                </button>
+
+                <button onclick="navigate('page-documentos-upload')" class="w-full flex items-center justify-between p-3 border border-border-subtle rounded-xl hover:bg-slate-50 transition-all text-left group">
+                  <div class="flex items-center gap-3">
+                    <span class="material-symbols-outlined text-secondary bg-amber-50 p-2 rounded-lg">cloud_upload</span>
+                    <div>
+                      <h4 class="font-bold text-xs text-text-main">Upload de Ficheiros Pendentes</h4>
+                      <p class="text-[10px] text-text-muted">Enviar digitalizações adicionais solicitadas.</p>
+                    </div>
+                  </div>
+                  <span class="material-symbols-outlined text-slate-400 group-hover:translate-x-0.5 transition-transform text-sm">arrow_forward_ios</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
 
       <section id="page-backoffice" class="page space-y-6 animate-fade-in">
         
