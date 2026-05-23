@@ -1,0 +1,55 @@
+/* Basic styles for portal-consular-stp */
+:root{
+  --bg:#f7f9fc;
+  --card:#ffffff;
+  --muted:#6b7280;
+  --accent:#0b5cff;
+  --radius:8px;
+  --gap:1rem;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background:var(--bg);
+  color:#0f172a;
+  -webkit-font-smoothing:antialiased;
+}
+.container{max-width:1100px;margin:0 auto;padding:1rem}
+header{background:var(--card);padding:0.75rem 1rem;border-bottom:1px solid #e6eef8}
+nav{display:flex;gap:1rem;align-items:center}
+button{background:var(--accent);color:white;border:0;padding:0.5rem 0.75rem;border-radius:6px;cursor:pointer}
+main{padding:1rem}
+.card{background:var(--card);padding:1rem;border-radius:var(--radius);box-shadow:0 1px 2px rgba(11,92,255,0.06)}
+.footer{font-size:0.9rem;color:var(--muted);padding:1rem;text-align:center}
+@media(min-width:700px){nav{justify-content:space-between}}
+
+/* css/styles.css additions from index.html */
+body { 
+  font-family: 'Inter', sans-serif; 
+  background-color: #f8fafc; 
+  color: #0f172a; 
+}
+
+.page { 
+  display: none; 
+}
+
+.page.active { 
+  display: block; 
+}
+
+/* Custom Scrollbar para o Chat */
+.custom-scroll::-webkit-scrollbar { 
+  width: 5px; 
+}
+
+.custom-scroll::-webkit-scrollbar-track { 
+  background: transparent; 
+}
+
+.custom-scroll::-webkit-scrollbar-thumb { 
+  background: #cbd5e1; 
+  border-radius: 4px; 
+}

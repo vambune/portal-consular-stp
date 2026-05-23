@@ -7,6 +7,7 @@
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+ <link rel="stylesheet" href="css/styles.css">
 <script id="tailwind-config">
 tailwind.config = {
   darkMode: "class",
@@ -33,15 +34,6 @@ tailwind.config = {
   }
 }
 </script>
-<style>
-  body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #0f172a; }
-  .page { display: none; }
-  .page.active { display: block; }
-  /* Custom Scrollbar para o Chat */
-  .custom-scroll::-webkit-scrollbar { width: 5px; }
-  .custom-scroll::-webkit-scrollbar-track { background: transparent; }
-  .custom-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-</style>
 </head>
 <body class="min-h-screen flex flex-col antialiased">
 
@@ -544,165 +536,10 @@ tailwind.config = {
     <p>© 2026 Direção Geral dos Assuntos Consulares — R.D.S.T.P. Todos os direitos reservados.</p>
   </footer>
 
-  <script>
-    // ===== NAVEGAÇÃO DE PÁGINAS (SPA) =====
-    function navigate(pageId) {
-      // Oculta todas as páginas
-      document.querySelectorAll('.page').forEach(page => {
-        page.classList.remove('active');
-      });
-      // Mostra a página desejada
-      const targetPage = document.getElementById(pageId);
-      if (targetPage) {
-        targetPage.classList.add('active');
-      }
-
-      // Atualiza visualmente a barra de navegação/sidebar
-      document.querySelectorAll('.nav-btn').forEach(btn => {
-        btn.classList.remove('active', 'text-primary', 'bg-slate-100', 'font-semibold');
-        btn.classList.add('text-text-muted');
-      });
-      
-      // Encontra e ativa o botão correspondente
-      const activeBtn = document.querySelector(`button[onclick="navigate('${pageId}')"]`);
-      if (activeBtn) {
-        activeBtn.classList.add('active', 'text-primary', 'bg-slate-100', 'font-semibold');
-        activeBtn.classList.remove('text-text-muted');
-      }
-      
-      // Rola para o topo automaticamente
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    // ===== FILTRO DE ATOS CONSULARES =====
-    function filterServices(category) {
-      // Atualiza botões de filtro
-      document.querySelectorAll('#filter-container .filter-btn').forEach(btn => {
-        btn.classList.remove('active', 'bg-primary', 'text-white');
-        btn.classList.add('bg-white', 'border', 'border-border-subtle', 'text-text-main', 'font-medium');
-      });
-
-      // Ativa o botão selecionado
-      const activeFilterBtn = event.currentTarget;
-      activeFilterBtn.classList.remove('bg-white', 'border', 'border-border-subtle', 'text-text-main', 'font-medium');
-      activeFilterBtn.classList.add('active', 'bg-primary', 'text-white', 'font-semibold');
-
-      // Filtra os cards
-      document.querySelectorAll('#services-grid .service-card').forEach(card => {
-        if (category === 'todos' || card.getAttribute('data-category') === category) {
-          card.style.display = 'flex';
-        } else {
-          card.style.display = 'none';
-        }
-      });
-    }
-
-    // ===== ASSISTENTE IA (CHAT INTEGENTE) =====
-    function sendChat(chatId) {
-      const input = document.getElementById('chat-input-' + chatId);
-      const container = document.getElementById('chat-messages-' + chatId);
-      if (!input || !input.value.trim()) return;
-
-      const userText = input.value.trim();
-
-      // Adiciona mensagem do usuário
-      const userDiv = document.createElement('div');
-      userDiv.className = 'flex flex-col gap-1 items-end ml-auto max-w-[85%]';
-      userDiv.innerHTML = `<div class="bg-primary text-white p-3 rounded-2xl rounded-tr-none leading-relaxed">${userText}</div><span class="text-[10px] text-text-muted mr-1">agora</span>`;
-      container.appendChild(userDiv);
-      
-      // Limpa input e rola tela
-      input.value = '';
-      container.scrollTop = container.scrollHeight;
-
-      // Cria resposta contextual inteligente baseada em palavras-chave
-      setTimeout(() => {
-        let reply = "Entendi sua mensagem. Para processar pedidos de passaportes ou vistos, certifique-se de carregar a documentação correta e efetuar o pagamento da taxa emolumentar correspondente diretamente no portal.";
-        const lowerText = userText.toLowerCase();
-
-        if (lowerText.includes('visto') || lowerText.includes('turismo')) {
-          reply = "Para o Visto de Turismo de Curta Duração (até 90 dias), você precisará do Passaporte válido por mais de 6 meses, Fotografia tipo passe, Reserva de voo de ida/volta e comprovativo de alojamento.";
-        } else if (lowerText.includes('passaporte') || lowerText.includes('renovar')) {
-          reply = "A renovação do Passaporte Ordinário tem uma taxa de €110,00. Através do nosso sistema de inteligência artificial, se carregar uma foto regulamentar e o seu BI atualizado, a triagem documental é feita instantaneamente.";
-        } else if (lowerText.includes('preço') || lowerText.includes('valor') || lowerText.includes('cust')) {
-          reply = "Os valores atuais são: Passaporte Ordinário (€110,00), Visto de Turismo (€60,00) e Procurações Consulares (€50,00). O pagamento pode ser feito por Cartão ou Transferência Bancária SEPA.";
-        }
-
-        const botDiv = document.createElement('div');
-        botDiv.className = 'flex flex-col gap-1 max-w-[85%]';
-        botDiv.innerHTML = `<div class="bg-slate-100 p-3 rounded-2xl rounded-tl-none text-text-main leading-relaxed">${reply}</div><span class="text-[10px] text-text-muted ml-1">agora</span>`;
-        container.appendChild(botDiv);
-        container.scrollTop = container.scrollHeight;
-      }, 900);
-    }
-
-    // ===== SIMULAÇÃO DE LEITURA OCR / IA NOS DOCUMENTOS =====
-    function simulateOcrScan(input, docId) {
-      const statusDiv = document.getElementById(docId + '-status');
-      if (!input.files || input.files.length === 0) return;
-
-      statusDiv.classList.remove('hidden', 'bg-status-success-bg', 'text-status-success-text', 'bg-status-danger-bg', 'text-status-danger-text');
-      statusDiv.className = "text-xs px-3 py-2 rounded-xl flex items-center gap-2 bg-amber-50 text-amber-800 border border-amber-200";
-      statusDiv.innerHTML = `<span class="material-symbols-outlined text-sm animate-spin">sync</span> Processando arquivo via IA (Análise OCR)...`;
-
-      setTimeout(() => {
-        statusDiv.className = "text-xs px-3 py-2 rounded-xl flex items-center gap-2 bg-status-success-bg text-status-success-text border border-emerald-200 animate-fade-in";
-        statusDiv.innerHTML = `<span class="material-symbols-outlined text-sm">verified</span> Documento lido com sucesso! Dados validados de forma inteligente.`;
-      }, 2000);
-    }
-
-    // ===== SWITCH DE MEIOS DE PAGAMENTO =====
-    function switchPayMethod(method) {
-      document.getElementById('pay-form-cc').classList.add('hidden');
-      document.getElementById('pay-form-sepa').classList.add('hidden');
-      document.getElementById('pay-form-home').classList.add('hidden');
-
-      // Reseta bordas dos labels de seleção
-      event.currentTarget.closest('.grid').querySelectorAll('label').forEach(lbl => {
-        lbl.className = "border border-border-subtle p-4 rounded-xl flex flex-col items-center justify-center gap-2 text-center cursor-pointer hover:bg-slate-50 transition-all select-none";
-      });
-
-      // Destaca o selecionado
-      const chosenLabel = event.currentTarget.closest('label');
-      chosenLabel.className = "border-2 border-primary bg-slate-50/50 p-4 rounded-xl flex flex-col items-center justify-center gap-2 text-center cursor-pointer hover:bg-slate-50 transition-all select-none";
-
-      // Mostra formulário correto
-      document.getElementById('pay-form-' + method).classList.remove('hidden');
-    }
-
-    // ===== SIMULAÇÃO DE EXECUÇÃO DE PAGAMENTO =====
-    function executePaymentSim() {
-      alert("Simulação: Pagamento processado com sucesso em ambiente de teste! Seu pedido foi encaminhado para a fila de triagem consular.");
-      navigate('page-novo-pedido');
-    }
-
-    // ===== MODO STAFF / BACKOFFICE VIEW TOGGLE =====
-    function toggleStaffView(checkbox) {
-      const navGroupBackoffice = document.getElementById('nav-group-backoffice');
-      if (checkbox.checked) {
-        navGroupBackoffice.classList.remove('hidden');
-        navigate('page-backoffice');
-      } else {
-        navGroupBackoffice.classList.add('hidden');
-        navigate('page-novo-pedido');
-      }
-    }
-
-    // ===== AÇÕES DA TABELA DO STAFF (BACKOFFICE) =====
-    function approveRow(btn, isApproved) {
-      const row = btn.closest('tr');
-      const statusCell = row.querySelector('td span.rounded-full, td span');
-      if (statusCell) {
-        if (isApproved) {
-          statusCell.className = 'px-2 py-0.5 rounded-full bg-status-success-bg text-status-success-text text-[10px] font-semibold';
-          statusCell.innerText = 'Aprovado';
-        } else {
-          statusCell.className = 'px-2 py-0.5 rounded-full bg-status-danger-bg text-status-danger-text text-[10px] font-semibold';
-          statusCell.innerText = 'Recusado';
-        }
-      }
-      row.style.opacity = '0.6';
-    }
-  </script>
+  <script src="js/navigation.js"></script>
+  <script src="js/chat.js"></script>
+  <script src="js/documents.js"></script>
+  <script src="js/payment.js"></script>
+  <script src="js/app.js"></script>
 </body>
 </html>
