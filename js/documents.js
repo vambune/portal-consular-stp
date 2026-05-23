@@ -265,22 +265,22 @@ function logAdminAction(userType, text) {
     container.insertBefore(logDiv, container.firstChild);
 }
 
-// Função para simular a gravação de alterações de perfil com auditoria
+// Função para simular a gravação de alterações de perfil com auditoria regional
 window.saveProfileChanges = function() {
-    alert("Alterações de residência e contactos guardadas com sucesso no ecossistema consular!");
+    alert("Dados de residência e contactos internacionais atualizados com sucesso no ecossistema consular regional!");
     
-    // Regista o log da alteração no backoffice para rastreabilidade
+    // Regista o log detalhado no backoffice indicando a ação de atualização do Utente
     if (typeof logAdminAction === "function") {
-        logAdminAction("UTENTE", "Endson dos Santos atualizou os dados de contacto e residência na Bélgica.");
+        logAdminAction("UTENTE", "Endson dos Santos atualizou os dados de contacto e morada na jurisdição da Embaixada.");
     }
 }
 
-// Função para simular a gravação de alterações de perfil com auditoria
+// Função para simular a gravação de alterações de perfil com auditoria regional
 function saveProfileChanges() {
-    alert("Alterações de residência e contactos guardadas com sucesso no ecossistema consular!");
+    alert("Dados de residência e contactos internacionais atualizados com sucesso no ecossistema consular regional!");
     
-    // Regista o log da alteração no backoffice para rastreabilidade
+    // Regista o log detalhado no backoffice indicando a ação de atualização do Utente
     if (typeof logAdminAction === "function") {
-        logAdminAction("UTENTE", "Endson dos Santos atualizou os dados de contacto e residência na Bélgica.");
+        logAdminAction("UTENTE", "Endson dos Santos atualizou os dados de contacto e morada na jurisdição da Embaixada.");
     }
 }
