@@ -54,3 +54,116 @@ window.approveRow = function(btn, isApproved){
   }
   row.style.opacity = '0.6';
 }
+
+window.searchAdminTable = function(){
+  const query = document.getElementById('admin-search').value.toLowerCase();
+  const rows = document.querySelectorAll('#admin-table-processes tbody tr');
+  rows.forEach(row => {
+    const text = row.innerText.toLowerCase();
+    row.style.display = text.includes(query) ? '' : 'none';
+  });
+}
+
+window.filterAdminTable = function(){
+  const filter = document.getElementById('filter-status-admin').value;
+  const rows = document.querySelectorAll('#admin-table-processes tbody tr');
+  rows.forEach(row => {
+    const statusText = row.querySelector('td:nth-child(4) span')?.innerText || '';
+    const matches = filter === 'todos' || statusText === filter;
+    const searchQuery = document.getElementById('admin-search').value.toLowerCase();
+    const matchesSearch = row.innerText.toLowerCase().includes(searchQuery);
+    row.style.display = matches && matchesSearch ? '' : 'none';
+  });
+}
+
+window.confirmAttendance = function(button){
+  const card = button.closest('div');
+  if (!card) return;
+  button.classList.remove('bg-white', 'text-emerald-600', 'border-border-subtle');
+  button.classList.add('bg-emerald-600', 'text-white', 'border-emerald-700');
+  button.innerHTML = '<span class="material-symbols-outlined text-sm">done</span>';
+  button.title = 'Presença Confirmada';
+  const badge = document.createElement('span');
+  badge.className = 'text-[10px] bg-emerald-100 text-emerald-800 px-2 py-1 rounded-full font-semibold';
+  badge.innerText = 'Confirmado';
+  if (!card.querySelector('.attendance-status')) {
+    badge.classList.add('attendance-status');
+    card.querySelector('.space-y-1').appendChild(badge);
+  }
+}
+
+// ==========================================================
+// NOVAS FUNCIONALIDADES: PAINEL ADMINISTRATIVO AVANÇADO (BACKOFFICE)
+// ==========================================================
+
+// 1. Pesquisa Inteligente de Processos na Tabela
+function searchAdminTable() {
+    const input = document.getElementById("admin-search");
+    const filter = input.value.toLowerCase();
+    const rows = document.querySelectorAll("#admin-table-processes .row-processo");
+
+    rows.forEach(row => {
+        const textElement = row.querySelector(".class-nome");
+        if (textElement) {
+            const txtValue = textElement.textContent || textElement.innerText;
+            if (txtValue.toLowerCase().indexOf(filter) > -1) {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
+            }
+        }
+    });
+}
+
+// 2. Filtro por Estado (Pendente, Em Revisão, Aprovado)
+function filterAdminTable() {
+    const select = document.getElementById("filter-status-admin");
+    const chosenStatus = select.value;
+    const rows = document.querySelectorAll("#admin-table-processes .row-processo");
+
+    rows.forEach(row => {
+        const badge = row.querySelector(".status-badge");
+        if (badge) {
+            const rowStatus = badge.innerText.trim();
+            if (chosenStatus === "todos" || rowStatus === chosenStatus) {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
+            }
+        }
+    });
+}
+
+// 3. Confirmar Atendimento/Presença no Calendário Dinâmico
+function confirmAttendance(btn) {
+    const card = btn.closest('.p-3');
+    card.style.transition = "all 0.4s ease";
+    card.style.opacity = "0.5";
+    card.style.backgroundColor = "#ecfdf5"; // emerald-50 de sucesso
+    btn.innerHTML = `<span class="material-symbols-outlined text-sm">done</span>`;
+    btn.className = "bg-emerald-600 text-white p-1.5 rounded-lg shadow-sm pointer-events-none";
+    
+    // Adicionar log na auditoria em tempo real
+    const nomeUtente = card.querySelector('h5').innerText;
+    logAdminAction("STAFF", `Presença confirmada para o utente ${nomeUtente} no balcão consular.`);
+}
+
+// 4. Inserção de Logs de Auditoria Dinâmicos (Rastreabilidade)
+function logAdminAction(userType, text) {
+    const container = document.getElementById("audit-log-container");
+    if (!container) return;
+
+    const now = new Date();
+    const timeString = now.toTimeString().split(' ')[0];
+
+    const logDiv = document.createElement("div");
+    logDiv.className = "flex items-center gap-2 border-b border-slate-50 pb-1.5 text-emerald-900 font-medium animate-fade-in";
+    logDiv.innerHTML = `
+        <span class="text-slate-400 font-mono">${timeString}</span>
+        <span class="bg-emerald-100 text-emerald-800 px-1.5 py-0.2 rounded font-bold uppercase text-[9px]">${userType}</span>
+        <span>${text}</span>
+    `;
+    
+    // Insere no início da lista de logs
+    container.insertBefore(logDiv, container.firstChild);
+}

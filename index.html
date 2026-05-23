@@ -434,100 +434,209 @@ tailwind.config = {
       </section>
 
       <section id="page-backoffice" class="page space-y-6 animate-fade-in">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border-subtle pb-4">
           <div>
             <h2 class="font-bold text-xl text-primary flex items-center gap-2">
-              <span class="material-symbols-outlined text-2xl">monitoring</span> Painel de Análise Consular e Triagem IA
+              <span class="material-symbols-outlined text-2xl">admin_panel_settings</span> 
+              Consulado-Geral — Sistema de Gestão Interna (Backoffice)
             </h2>
-            <p class="text-xs text-text-muted">Fila global de pedidos com inteligência em segundo plano.</p>
+            <p class="text-xs text-text-muted">Gestão de utentes, triagem documental com IA e controlo de agendamentos presenciais.</p>
           </div>
-          <div class="bg-white px-3 py-1.5 border border-border-subtle rounded-xl text-xs font-semibold text-text-main shadow-sm flex items-center gap-1.5">
-            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Servidor IA: Ativo
+          <div class="flex items-center gap-2">
+            <span class="text-xs bg-slate-100 text-text-main px-3 py-1.5 rounded-xl border border-border-subtle font-medium flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Motor OCR/IA: Conectado
+            </span>
           </div>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <div class="bg-surface border border-border-subtle p-4 rounded-xl shadow-sm flex items-center gap-3">
-            <span class="material-symbols-outlined text-primary bg-emerald-50 p-2 rounded-lg text-2xl">hourglass_empty</span>
+            <div class="bg-primary/10 text-primary p-3 rounded-xl"><span class="material-symbols-outlined text-2xl">hourglass_empty</span></div>
             <div>
-              <p class="text-[10px] text-text-muted uppercase font-bold tracking-wider">Aguardando Triagem</p>
-              <p class="text-lg font-bold text-text-main">14 Pedidos</p>
+              <p class="text-[10px] text-text-muted uppercase font-bold tracking-wider">Aguardando IA</p>
+              <p class="text-lg font-bold text-text-main" id="kpi-pendentes">14 Pedidos</p>
             </div>
           </div>
           <div class="bg-surface border border-border-subtle p-4 rounded-xl shadow-sm flex items-center gap-3">
-            <span class="material-symbols-outlined text-secondary bg-amber-50 p-2 rounded-lg text-2xl">quick_reference_all</span>
+            <div class="bg-amber-50 text-amber-700 p-3 rounded-xl"><span class="material-symbols-outlined text-2xl">calendar_month</span></div>
             <div>
-              <p class="text-[10px] text-text-muted uppercase font-bold tracking-wider">Alertas de Fraude / Erro</p>
+              <p class="text-[10px] text-text-muted uppercase font-bold tracking-wider">Agendados Hoje</p>
+              <p class="text-lg font-bold text-text-main">8 Utentes</p>
+            </div>
+          </div>
+          <div class="bg-surface border border-border-subtle p-4 rounded-xl shadow-sm flex items-center gap-3">
+            <div class="bg-status-danger-bg text-status-danger-text p-3 rounded-xl"><span class="material-symbols-outlined text-2xl">gpp_maybe</span></div>
+            <div>
+              <p class="text-[10px] text-text-muted uppercase font-bold tracking-wider">Alertas de Risco</p>
               <p class="text-lg font-bold text-status-danger-text">2 Críticos</p>
             </div>
           </div>
           <div class="bg-surface border border-border-subtle p-4 rounded-xl shadow-sm flex items-center gap-3">
-            <span class="material-symbols-outlined text-blue-600 bg-blue-50 p-2 rounded-lg text-2xl">assignment_turned_in</span>
+            <div class="bg-emerald-50 text-emerald-700 p-3 rounded-xl"><span class="material-symbols-outlined text-2xl">avg_time</span></div>
             <div>
-              <p class="text-[10px] text-text-muted uppercase font-bold tracking-wider">Analisados Hoje</p>
-              <p class="text-lg font-bold text-text-main">41 Concluídos</p>
+              <p class="text-[10px] text-text-muted uppercase font-bold tracking-wider">Tempo de Resposta</p>
+              <p class="text-lg font-bold text-text-main">18 min (Médio)</p>
             </div>
           </div>
         </div>
 
-        <div class="bg-surface border border-border-subtle rounded-xl shadow-sm overflow-hidden">
-          <div class="p-4 border-b border-border-subtle bg-slate-50/60 font-bold text-xs text-text-main">
-            Fila de Processamento Consular Activa
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          
+          <div class="lg:col-span-8 space-y-4">
+            
+            <div class="bg-surface border border-border-subtle p-4 rounded-xl shadow-sm flex flex-col sm:flex-row gap-3 justify-between items-center">
+              <div class="relative w-full sm:w-72">
+                <span class="material-symbols-outlined absolute left-3 top-2.5 text-text-muted text-sm">search</span>
+                <input type="text" id="admin-search" onkeyup="searchAdminTable()" placeholder="Pesquisar por nome ou ID..." class="w-full pl-9 pr-3 py-1.5 border border-border-subtle rounded-xl text-xs focus:ring-primary focus:border-primary">
+              </div>
+              <div class="flex gap-2 w-full sm:w-auto">
+                <select id="filter-status-admin" onchange="filterAdminTable()" class="w-full sm:w-auto text-xs border border-border-subtle rounded-xl py-1.5 px-3 focus:ring-primary focus:border-primary bg-white">
+                  <option value="todos">Todos os Estados</option>
+                  <option value="Pendente">Pendentes</option>
+                  <option value="Em Revisão">Em Revisão</option>
+                  <option value="Aprovado">Aprovados</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="bg-surface border border-border-subtle rounded-xl shadow-sm overflow-hidden">
+              <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs border-collapse" id="admin-table-processes">
+                  <thead>
+                    <tr class="bg-slate-50 border-b border-border-subtle text-text-muted uppercase text-[10px] font-bold">
+                      <th class="p-3">Utente / Requerente</th>
+                      <th class="p-3">Ato Solicitado</th>
+                      <th class="p-3">Análise de Risco IA (OCR)</th>
+                      <th class="p-3">Estado</th>
+                      <th class="p-3 text-right">Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-border-subtle text-text-main">
+                    <tr class="hover:bg-slate-50/80 transition-all row-processo">
+                      <td class="p-3">
+                        <p class="font-bold class-nome">Manuel dos Santos Espírito</p>
+                        <p class="text-[10px] text-text-muted">ID: #STP-9831-BE</p>
+                      </td>
+                      <td class="p-3">Passaporte Ordinário</td>
+                      <td class="p-3">
+                        <span class="px-2 py-0.5 rounded bg-status-success-bg text-status-success-text text-[10px] font-semibold flex items-center gap-1 w-fit">
+                          <span class="material-symbols-outlined text-xs">verified</span> Passaporte Autêntico (98% match)
+                        </span>
+                      </td>
+                      <td class="p-3"><span class="status-badge px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 text-[10px] font-semibold">Pendente</span></td>
+                      <td class="p-3 text-right space-x-1 whitespace-nowrap">
+                        <button onclick="approveRow(this, true)" class="bg-emerald-600 hover:bg-emerald-700 text-white px-2 py-1 rounded text-[11px] font-medium transition-all shadow-sm">Aprovar</button>
+                        <button onclick="approveRow(this, false)" class="bg-rose-600 hover:bg-rose-700 text-white px-2 py-1 rounded text-[11px] font-medium transition-all shadow-sm">Recusar</button>
+                      </td>
+                    </tr>
+                    <tr class="hover:bg-slate-50/80 transition-all row-processo">
+                      <td class="p-3">
+                        <p class="font-bold class-nome">Amélia Rita da Costa</p>
+                        <p class="text-[10px] text-text-muted">ID: #STP-4412-BE</p>
+                      </td>
+                      <td class="p-3">Visto de Turismo</td>
+                      <td class="p-3">
+                        <span class="px-2 py-0.5 rounded bg-status-danger-bg text-status-danger-text text-[10px] font-semibold flex items-center gap-1 w-fit">
+                          <span class="material-symbols-outlined text-xs">warning</span> Assinatura Divergente detetada
+                        </span>
+                      </td>
+                      <td class="p-3"><span class="status-badge px-2 py-0.5 rounded-full bg-orange-100 text-orange-800 text-[10px] font-semibold">Em Revisão</span></td>
+                      <td class="p-3 text-right space-x-1 whitespace-nowrap">
+                        <button onclick="approveRow(this, true)" class="bg-emerald-600 hover:bg-emerald-700 text-white px-2 py-1 rounded text-[11px] font-medium transition-all shadow-sm">Aprovar</button>
+                        <button onclick="approveRow(this, false)" class="bg-rose-600 hover:bg-rose-700 text-white px-2 py-1 rounded text-[11px] font-medium transition-all shadow-sm">Recusar</button>
+                      </td>
+                    </tr>
+                    <tr class="hover:bg-slate-50/80 transition-all row-processo">
+                      <td class="p-3">
+                        <p class="font-bold class-nome">Carlos Edmilson Delgado</p>
+                        <p class="text-[10px] text-text-muted">ID: #STP-1102-BE</p>
+                      </td>
+                      <td class="p-3">Procuração Consular</td>
+                      <td class="p-3">
+                        <span class="px-2 py-0.5 rounded bg-status-success-bg text-status-success-text text-[10px] font-semibold flex items-center gap-1 w-fit">
+                          <span class="material-symbols-outlined text-xs">verified</span> Reconhecimento Notarial OK
+                        </span>
+                      </td>
+                      <td class="p-3"><span class="status-badge px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 text-[10px] font-semibold">Pendente</span></td>
+                      <td class="p-3 text-right space-x-1 whitespace-nowrap">
+                        <button onclick="approveRow(this, true)" class="bg-emerald-600 hover:bg-emerald-700 text-white px-2 py-1 rounded text-[11px] font-medium transition-all shadow-sm">Aprovar</button>
+                        <button onclick="approveRow(this, false)" class="bg-rose-600 hover:bg-rose-700 text-white px-2 py-1 rounded text-[11px] font-medium transition-all shadow-sm">Recusar</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
-          <div class="overflow-x-auto">
-            <table class="w-full text-left text-xs border-collapse">
-              <thead>
-                <tr class="bg-slate-50 border-b border-border-subtle text-text-muted uppercase text-[10px] font-bold">
-                  <th class="p-3">Utente / Requerente</th>
-                  <th class="p-3">Ato Solicitado</th>
-                  <th class="p-3">Análise de Risco IA (OCR)</th>
-                  <th class="p-3">Estado</th>
-                  <th class="p-3 text-right">Ações</th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-border-subtle text-text-main">
-                <tr class="hover:bg-slate-50/80 transition-all">
-                  <td class="p-3">
-                    <p class="font-bold">Manuel dos Santos Espírito</p>
-                    <p class="text-[10px] text-text-muted">ID: #STP-9831-BE</p>
-                  </td>
-                  <td class="p-3">Passaporte Ordinário</td>
-                  <td class="p-3">
-                    <span class="px-2 py-0.5 rounded bg-status-success-bg text-status-success-text text-[10px] font-semibold flex items-center gap-1 w-fit">
-                      <span class="material-symbols-outlined text-xs">verified</span> Passaporte Autêntico (98% match)
-                    </span>
-                  </td>
-                  <td class="p-3">
-                    <span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 text-[10px] font-semibold">Pendente</span>
-                  </td>
-                  <td class="p-3 text-right space-x-1">
-                    <button onclick="approveRow(this, true)" class="bg-emerald-600 hover:bg-emerald-700 text-white px-2 py-1 rounded text-[11px] font-medium transition-all shadow-sm">Aprovar</button>
-                    <button onclick="approveRow(this, false)" class="bg-rose-600 hover:bg-rose-700 text-white px-2 py-1 rounded text-[11px] font-medium transition-all shadow-sm">Recusar</button>
-                  </td>
-                </tr>
-                <tr class="hover:bg-slate-50/80 transition-all">
-                  <td class="p-3">
-                    <p class="font-bold">Amélia Rita da Costa</p>
-                    <p class="text-[10px] text-text-muted">ID: #STP-4412-BE</p>
-                  </td>
-                  <td class="p-3">Visto de Turismo</td>
-                  <td class="p-3">
-                    <span class="px-2 py-0.5 rounded bg-status-danger-bg text-status-danger-text text-[10px] font-semibold flex items-center gap-1 w-fit">
-                      <span class="material-symbols-outlined text-xs">warning</span> Assinatura Divergente detetada
-                    </span>
-                  </td>
-                  <td class="p-3">
-                    <span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 text-[10px] font-semibold">Em Revisão</span>
-                  </td>
-                  <td class="p-3 text-right space-x-1">
-                    <button onclick="approveRow(this, true)" class="bg-emerald-600 hover:bg-emerald-700 text-white px-2 py-1 rounded text-[11px] font-medium transition-all shadow-sm">Aprovar</button>
-                    <button onclick="approveRow(this, false)" class="bg-rose-600 hover:bg-rose-700 text-white px-2 py-1 rounded text-[11px] font-medium transition-all shadow-sm">Recusar</button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+
+          <div class="lg:col-span-4 space-y-4">
+            <div class="bg-surface border border-border-subtle p-4 rounded-xl shadow-sm space-y-4">
+              <div class="flex items-center justify-between border-b border-border-subtle pb-2">
+                <h3 class="font-bold text-xs md:text-sm text-text-main flex items-center gap-1.5">
+                  <span class="material-symbols-outlined text-primary text-lg">calendar_today</span> Agendamentos de Hoje
+                </h3>
+                <span class="text-[10px] bg-secondary text-white px-2 py-0.5 rounded-md font-bold">23 Mai</span>
+              </div>
+
+              <div class="space-y-3 max-h-[380px] overflow-y-auto custom-scroll pr-1">
+                
+                <div class="p-3 border border-border-subtle rounded-xl bg-slate-50/50 flex items-start gap-2.5 justify-between">
+                  <div class="space-y-1">
+                    <span class="text-[10px] font-bold bg-slate-200 text-slate-800 px-1.5 py-0.5 rounded">09:30</span>
+                    <h5 class="font-bold text-xs text-text-main">Filomena da Fonseca</h5>
+                    <p class="text-[10px] text-text-muted">Atendimento: Biometria Passaporte</p>
+                  </div>
+                  <button onclick="confirmAttendance(this)" class="bg-white hover:bg-emerald-50 border border-border-subtle hover:border-emerald-300 p-1.5 rounded-lg text-emerald-600 shadow-sm transition-all flex items-center justify-center" title="Confirmar Presença">
+                    <span class="material-symbols-outlined text-sm">check_circle</span>
+                  </button>
+                </div>
+
+                <div class="p-3 border border-border-subtle rounded-xl bg-slate-50/50 flex items-start gap-2.5 justify-between">
+                  <div class="space-y-1">
+                    <span class="text-[10px] font-bold bg-slate-200 text-slate-800 px-1.5 py-0.5 rounded">11:00</span>
+                    <h5 class="font-bold text-xs text-text-main">Juvêncio Trovoada</h5>
+                    <p class="text-[10px] text-text-muted">Atendimento: Levantamento de Visto</p>
+                  </div>
+                  <button onclick="confirmAttendance(this)" class="bg-white hover:bg-emerald-50 border border-border-subtle hover:border-emerald-300 p-1.5 rounded-lg text-emerald-600 shadow-sm transition-all flex items-center justify-center" title="Confirmar Presença">
+                    <span class="material-symbols-outlined text-sm">check_circle</span>
+                  </button>
+                </div>
+
+                <div class="p-3 border border-border-subtle rounded-xl bg-slate-50/50 flex items-start gap-2.5 justify-between">
+                  <div class="space-y-1">
+                    <span class="text-[10px] font-bold bg-slate-200 text-slate-800 px-1.5 py-0.5 rounded">14:15</span>
+                    <h5 class="font-bold text-xs text-text-main">Tânia Cravid</h5>
+                    <p class="text-[10px] text-text-muted">Atendimento: Inscrição Consular</p>
+                  </div>
+                  <button onclick="confirmAttendance(this)" class="bg-white hover:bg-emerald-50 border border-border-subtle hover:border-emerald-300 p-1.5 rounded-lg text-emerald-600 shadow-sm transition-all flex items-center justify-center" title="Confirmar Presença">
+                    <span class="material-symbols-outlined text-sm">check_circle</span>
+                  </button>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="bg-surface border border-border-subtle p-4 rounded-xl shadow-sm space-y-3">
+          <h3 class="font-bold text-xs md:text-sm text-text-main flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-slate-500 text-lg">history_toggle_off</span> Logs Recentes de Auditoria (Segurança GDPR)
+          </h3>
+          <div class="text-[11px] text-text-muted space-y-2" id="audit-log-container">
+            <div class="flex items-center gap-2 border-b border-slate-50 pb-1.5">
+              <span class="text-slate-400 font-mono">20:45:12</span>
+              <span class="bg-blue-50 text-blue-700 px-1.5 py-0.2 rounded font-bold uppercase text-[9px]">SISTEMA</span>
+              <span>Análise OCR executada automaticamente para o processo #STP-1102-BE.</span>
+            </div>
+            <div class="flex items-center gap-2 border-b border-slate-50 pb-1.5">
+              <span class="text-slate-400 font-mono">18:22:40</span>
+              <span class="bg-amber-50 text-amber-800 px-1.5 py-0.2 rounded font-bold uppercase text-[9px]">STAFF</span>
+              <span>Utente Filomena da Fonseca agendou atendimento presencial via portal público.</span>
+            </div>
           </div>
         </div>
+
       </section>
     </main>
   </div>
