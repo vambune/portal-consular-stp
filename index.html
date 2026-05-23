@@ -2,12 +2,11 @@
 <html lang="pt">
 <head>
 <meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name=\"viewport\"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Portal Consular STP — Bélgica</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
- <link rel="stylesheet" href="css/styles.css">
 <script id="tailwind-config">
 tailwind.config = {
   darkMode: "class",
@@ -34,6 +33,8 @@ tailwind.config = {
   }
 }
 </script>
+
+<link rel="stylesheet" href="css/styles.css">
 </head>
 <body class="min-h-screen flex flex-col antialiased">
 
@@ -340,7 +341,7 @@ tailwind.config = {
           <div class="lg:col-span-8 bg-surface border border-border-subtle p-5 rounded-2xl shadow-sm space-y-6">
             <div>
               <h2 class="font-bold text-lg text-text-main">Escolha o Método de Pagamento</h2>
-              <p class="text-xs text-text-muted">Sua transação é processada em um ambiente totalmente seguro e encriptado.</p>
+              <p class="text-xs text-text-muted">Sua transação é processada em um ambiente totalmente seguro.</p>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -387,7 +388,7 @@ tailwind.config = {
               <p class="text-text-muted"><strong>IBAN:</strong> BE68 3101 2345 6789</p>
               <p class="text-text-muted"><strong>BIC / SWIFT:</strong> KREDBEBBXXX</p>
               <p class="text-text-muted"><strong>Beneficiário:</strong> Ambassade de São Tomé et Príncipe</p>
-              <p class="text-status-danger-text font-medium mt-2">⚠️ Importante: Insira o número do seu processo nas observações da transferência bancária.</p>
+              <p class="text-status-danger-text font-medium mt-2">⚠️ Importante: Insira o número do seu processo nas observações.</p>
             </div>
 
             <div id="pay-form-home" class="hidden flex flex-col sm:flex-row items-center gap-4 p-4 bg-slate-50 border border-border-subtle rounded-xl text-xs">
@@ -398,7 +399,6 @@ tailwind.config = {
                 <p class="font-semibold text-text-main">Pagamento por Referência Bancária / QR Code</p>
                 <p class="text-text-muted"><strong>Entidade:</strong> 21453</p>
                 <p class="text-text-muted"><strong>Referência:</strong> 987 654 321</p>
-                <p class="text-text-muted">Escaneie o código ou utilize os dados acima no aplicativo do seu banco nacional.</p>
               </div>
             </div>
 
@@ -439,10 +439,10 @@ tailwind.config = {
             <h2 class="font-bold text-xl text-primary flex items-center gap-2">
               <span class="material-symbols-outlined text-2xl">monitoring</span> Painel de Análise Consular e Triagem IA
             </h2>
-            <p class="text-xs text-text-muted">Fila global de pedidos com inteligência em segundo plano para verificação documental.</p>
+            <p class="text-xs text-text-muted">Fila global de pedidos com inteligência em segundo plano.</p>
           </div>
           <div class="bg-white px-3 py-1.5 border border-border-subtle rounded-xl text-xs font-semibold text-text-main shadow-sm flex items-center gap-1.5">
-            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Servidor IA: Ativo e Operacional
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Servidor IA: Ativo
           </div>
         </div>
 
