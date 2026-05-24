@@ -1,536 +1,169 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt" class="scroll-smooth">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Portal Consular STP — Bélgica</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-tailwind.config = {
-  darkMode: "class",
-  theme: {
-    extend: {
-      colors: {
-        primary: "#154212",
-        "primary-light": "#1e5c1a",
-        secondary: "#7b5800",
-        "secondary-light": "#a37500",
-        background: "#f8fafc",
-        surface: "#ffffff",
-        "border-subtle": "#e2e8f0",
-        "text-main": "#0f172a",
-        "text-muted": "#64748b",
-        "status-success-bg": "#dcfce7",
-        "status-success-text": "#166534",
-        "status-warning-bg": "#fef9c3",
-        "status-warning-text": "#854d0e",
-        "status-danger-bg": "#fee2e2",
-        "status-danger-text": "#991b1b"
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Portal Consular STP — Embaixada em Bruxelas</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  
+  <link rel="stylesheet" href="css/styles.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: "#0c3a1a",
+            secondary: "#d4af37",
+            "primary-light": "#155e2d",
+            "text-main": "#1e293b",
+            "text-muted": "#64748b",
+            "border-subtle": "#e2e8f0",
+            surface: "#ffffff"
+          }
+        }
       }
     }
-  }
-}
-</script>
-
-<link rel="stylesheet" href="css/styles.css">
+  </script>
 </head>
-<body class="min-h-screen flex flex-col antialiased">
+<body class="bg-slate-50 text-text-main font-['Inter'] antialiased">
 
-  <header class="bg-primary text-white sticky top-0 z-50 shadow-md px-4 py-3 flex items-center justify-between transition-all">
+  <header class="bg-white border-b border-border-subtle sticky top-0 z-40 px-4 lg:px-8 py-3 flex items-center justify-between shadow-sm">
     <div class="flex items-center gap-3">
-      <div class="bg-white p-1.5 rounded-full shadow-inner flex items-center justify-center">
-        <span class="material-symbols-outlined text-secondary text-2xl font-bold">workspace_premium</span>
+      <div class="w-12 h-12 bg-slate-50 p-1 rounded-xl border border-border-subtle flex items-center justify-center shrink-0">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/1/1d/Coat_of_arms_of_Sao_Tome_and_Principe.svg" alt="Brasão de Armas de STP" class="w-10 h-10 object-contain">
       </div>
       <div>
-        <h1 class="font-bold text-base md:text-lg leading-tight tracking-wide">República Democrática de São Tomé e Príncipe</h1>
-        <p class="text-xs text-slate-300">Embaixada e Consulado-Geral na Bélgica</p>
+        <h1 class="text-xs font-black text-primary uppercase tracking-wider">República Democrática de São Tomé e Príncipe</h1>
+        <p class="text-[11px] text-text-muted font-medium">Portal Consular Digital Integrado — Jurisdição Regional</p>
       </div>
     </div>
 
-    <div class="flex items-center gap-4">
-      <div class="flex items-center gap-2 bg-primary-light/50 border border-white/10 px-3 py-1.5 rounded-full text-xs">
-        <span class="material-symbols-outlined text-sm">shield_person</span>
-        <span class="hidden sm:inline font-medium text-slate-200">Modo Staff:</span>
-        <label class="relative inline-flex items-center cursor-pointer">
-          <input type="checkbox" id="staff-toggle" class="sr-only peer" onchange="toggleStaffView(this)">
-          <div class="w-9 h-5 bg-slate-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-secondary"></div>
-        </label>
-      </div>
+    <div class="flex items-center gap-3" id="topbar-auth-zone">
+      <button onclick="openLoginModal()" class="bg-primary hover:bg-primary-light text-white text-xs font-bold px-4 py-2 rounded-xl transition-all shadow flex items-center gap-1.5">
+        <span class="material-symbols-outlined text-sm">login</span> Aceder à Área Privada
+      </button>
     </div>
   </header>
 
-  <div class="flex-1 flex flex-col lg:flex-row">
+  <div class="flex min-h-[calc(100vh-73px)] flex-col lg:flex-row">
     
-    <aside id="sidebar-main" class="w-full lg:w-64 bg-surface border-b lg:border-b-0 lg:border-r border-border-subtle p-4 flex flex-row lg:flex-col gap-2 overflow-x-auto lg:overflow-x-visible shrink-0">
-      <div id="nav-group-cidadao" class="flex flex-row lg:flex-col gap-1 w-full">
-        <button onclick="navigate('page-home')" class="nav-btn active flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all w-nowrap text-primary bg-slate-100 font-semibold w-full">
-          <span class="material-symbols-outlined">home</span>
-          <span>Início</span>
-        </button>
-        <button onclick="navigate('page-perfil-cidadao')" class="nav-btn flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all w-nowrap text-text-muted hover:bg-slate-50 w-full">
-          <span class="material-symbols-outlined">account_circle</span>
-          <span>Meu Perfil Consular</span>
-        </button>
-        <button onclick="navigate('page-novo-pedido')" class="nav-btn flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all w-nowrap text-text-muted hover:bg-slate-50 w-full">
-          <span class="material-symbols-outlined">add_card</span>
-          <span>Novo Pedido</span>
-        </button>
-        <button onclick="navigate('page-documentos-upload')" class="nav-btn flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all w-nowrap text-text-muted hover:bg-slate-50 w-full">
-          <span class="material-symbols-outlined">cloud_upload</span>
-          <span>Enviar Documentos</span>
-        </button>
-        <button onclick="navigate('page-pagamento')" class="nav-btn flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all w-nowrap text-text-muted hover:bg-slate-50 w-full">
-          <span class="material-symbols-outlined">payments</span>
-          <span>Pagamentos</span>
-        </button>
-      </div>
+    <aside id="sidebar-main" class="w-full lg:w-64 bg-white border-b lg:border-b-0 lg:border-r border-border-subtle p-4 shrink-0 hidden">
+      <div class="space-y-6">
+        
+        <div class="p-3 bg-slate-50 border border-border-subtle rounded-xl flex items-center gap-3">
+          <div class="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-xs" id="user-avatar">
+            U
+          </div>
+          <div>
+            <p class="text-xs font-bold text-text-main" id="user-display-name">Utilizador</p>
+            <span class="text-[9px] uppercase font-extrabold text-secondary tracking-wider" id="user-display-role">Público</span>
+          </div>
+        </div>
 
-      <div id="nav-group-backoffice" class="hidden flex flex-row lg:flex-col gap-1 w-full border-t border-border-subtle pt-2 lg:mt-2">
-        <button onclick="navigate('page-backoffice')" class="nav-btn flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all w-nowrap text-text-muted hover:bg-slate-50 w-full">
-          <span class="material-symbols-outlined">admin_panel_settings</span>
-          <span>Fila de Análise IA</span>
+        <nav class="space-y-1" id="sidebar-nav-links">
+          </nav>
+
+        <hr class="border-border-subtle">
+        <button onclick="logoutSystem()" class="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-bold text-rose-600 hover:bg-rose-50 transition-all">
+          <span class="material-symbols-outlined text-sm">logout</span> Terminar Sessão
         </button>
       </div>
     </aside>
 
-    <main class="flex-1 p-4 md:p-6 max-w-7xl mx-auto w-full overflow-hidden">
+    <main class="flex-1 p-4 lg:p-8 max-w-7xl mx-auto w-full space-y-6">
 
-      <section id="page-home" class="page active space-y-6 animate-fade-in">
+      <section id="page-public-hub" class="page space-y-8 animate-fade-in">
         
-        <div class="bg-gradient-to-r from-primary to-emerald-950 text-white p-6 rounded-2xl shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-          <div class="space-y-1">
-            <h2 class="font-bold text-xl md:text-2xl tracking-wide">Olá, Endson dos Santos</h2>
-            <p class="text-xs text-emerald-100/90 flex items-center gap-1.5">
-              <span class="material-symbols-outlined text-sm">verified_user</span> Perfil Consular verificado com sucesso | Último acesso hoje às 23:45
-            </p>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+          <div class="lg:col-span-7 space-y-4">
+            <span class="bg-amber-100 text-amber-900 border border-amber-200 text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-md tracking-wider">Atendimento Consular Moderno</span>
+            <h2 class="text-2xl md:text-4xl font-extrabold text-primary tracking-tight leading-none">Bem-vindo ao Consulado Geral Digital</h2>
+            <p class="text-xs md:text-sm text-text-muted leading-relaxed">Gerencie a sua inscrição consular, pedidos de passaporte, vistos e atos notariais de forma automatizada. Sob a jurisdição de Bruxelas, cobrimos utentes residentes na <strong>Bélgica, França, Países Baixos, Luxemburgo e Reino Unido</strong>.</p>
           </div>
-          <div class="bg-white/10 px-4 py-2 rounded-xl border border-white/10 text-center shrink-0">
-            <p class="text-[10px] uppercase font-bold tracking-wider text-slate-300">Inscrição Consular</p>
-            <p class="text-sm font-bold text-secondary">Ativa (#STP-8821)</p>
+          
+          <div class="lg:col-span-5 bg-gradient-to-br from-primary to-emerald-950 text-white p-5 rounded-2xl shadow-md space-y-4 relative overflow-hidden">
+            <div class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-secondary animate-pulse">smart_toy</span>
+              <h4 class="font-bold text-xs uppercase tracking-wider text-amber-200">Assistente Virtual de Triagem</h4>
+            </div>
+            <p class="text-[11px] text-slate-200">Diga-me o que pretende solicitar para que eu possa validar os requisitos imediatamente antes de fazer o seu login.</p>
+            <div class="space-y-2">
+              <input type="text" id="ai-agent-input" placeholder="Ex: Preciso de renovar o meu passaporte..." class="w-full bg-white/10 border border-white/20 rounded-xl text-xs px-3 py-2 text-white placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-secondary">
+              <button onclick="triggerAIAgent()" class="w-full bg-secondary hover:bg-amber-500 text-primary font-bold text-xs py-2 rounded-xl transition-all shadow-sm">Consultar Viabilidade com IA</button>
+            </div>
+            <p id="ai-agent-reply" class="text-[11px] bg-white/10 p-2 rounded-lg hidden font-medium border border-white/5 animate-fade-in"></p>
           </div>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          
-          <div class="lg:col-span-8 space-y-4">
-            <div class="bg-surface border border-border-subtle rounded-2xl shadow-sm overflow-hidden">
-              <div class="p-4 border-b border-border-subtle bg-slate-50/50 flex items-center justify-between">
-                <h3 class="font-bold text-sm text-text-main flex items-center gap-2">
-                  <span class="material-symbols-outlined text-primary text-lg">folder_shared</span> Os Meus Processos e Pedidos Recentes
-                </h3>
-                <span class="text-[11px] font-semibold text-text-muted">A acompanhar em tempo real</span>
-              </div>
-              
-              <div class="overflow-x-auto">
-                <table class="w-full text-left text-xs border-collapse" id="user-home-table">
-                  <thead>
-                    <tr class="bg-slate-50 border-b border-border-subtle text-text-muted uppercase text-[10px] font-bold">
-                      <th class="p-3">Referência</th>
-                      <th class="p-3">Ato / Serviço</th>
-                      <th class="p-3">Data de Submissão</th>
-                      <th class="p-3">Estado Atual</th>
-                    </tr>
-                  </thead>
-                  <tbody class="divide-y divide-border-subtle text-text-main" id="user-process-list">
-                    <tr class="hover:bg-slate-50/50 transition-all">
-                      <td class="p-3 font-mono text-[11px] font-bold text-text-muted">#STP-9831</td>
-                      <td class="p-3 font-semibold">Renovação de Passaporte Ordinário</td>
-                      <td class="p-3 text-text-muted">23 Mai 2026</td>
-                      <td class="p-3">
-                        <span class="home-status-badge px-2.5 py-1 rounded-full bg-amber-50 text-amber-800 border border-amber-200 text-[10px] font-bold">Pendente</span>
-                      </td>
-                    </tr>
-                    <tr class="hover:bg-slate-50/50 transition-all">
-                      <td class="p-3 font-mono text-[11px] font-bold text-text-muted">#STP-7612</td>
-                      <td class="p-3 font-semibold">Inscrição Consular Obrigatória</td>
-                      <td class="p-3 text-text-muted">15 Fev 2026</td>
-                      <td class="p-3">
-                        <span class="px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 text-[10px] font-bold">Concluído</span>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div class="bg-white border border-border-subtle p-5 rounded-xl shadow-sm space-y-2 hover:border-primary transition-all cursor-pointer" onclick="openLoginModal()">
+            <span class="material-symbols-outlined text-primary text-2xl">badge</span>
+            <h3 class="font-bold text-xs md:text-sm text-text-main">Inscrição Consular</h3>
+            <p class="text-[11px] text-text-muted">Obrigatória para todos os cidadãos residentes na nossa jurisdição regional.</p>
           </div>
-
-          <div class="lg:col-span-4 space-y-4">
-            <div class="bg-surface border border-border-subtle p-5 rounded-2xl shadow-sm space-y-4">
-              <h3 class="font-bold text-xs md:text-sm text-text-main uppercase tracking-wider text-text-muted">Ações Disponíveis</h3>
-              
-              <div class="space-y-2">
-                <button onclick="navigate('page-novo-pedido')" class="w-full flex items-center justify-between p-3 border border-border-subtle rounded-xl hover:bg-slate-50 transition-all text-left group">
-                  <div class="flex items-center gap-3">
-                    <span class="material-symbols-outlined text-primary bg-emerald-50 p-2 rounded-lg">add_card</span>
-                    <div>
-                      <h4 class="font-bold text-xs text-text-main">Solicitar Novo Documento</h4>
-                      <p class="text-[10px] text-text-muted">Iniciar pedido de visto, certidões ou atos.</p>
-                    </div>
-                  </div>
-                  <span class="material-symbols-outlined text-slate-400 group-hover:translate-x-0.5 transition-transform text-sm">arrow_forward_ios</span>
-                </button>
-
-                <button onclick="navigate('page-documentos-upload')" class="w-full flex items-center justify-between p-3 border border-border-subtle rounded-xl hover:bg-slate-50 transition-all text-left group">
-                  <div class="flex items-center gap-3">
-                    <span class="material-symbols-outlined text-secondary bg-amber-50 p-2 rounded-lg">cloud_upload</span>
-                    <div>
-                      <h4 class="font-bold text-xs text-text-main">Upload de Ficheiros Pendentes</h4>
-                      <p class="text-[10px] text-text-muted">Enviar digitalizações adicionais solicitadas.</p>
-                    </div>
-                  </div>
-                  <span class="material-symbols-outlined text-slate-400 group-hover:translate-x-0.5 transition-transform text-sm">arrow_forward_ios</span>
-                </button>
-              </div>
-            </div>
+          <div class="bg-white border border-border-subtle p-5 rounded-xl shadow-sm space-y-2 hover:border-primary transition-all cursor-pointer" onclick="openLoginModal()">
+            <span class="material-symbols-outlined text-primary text-2xl">add_card</span>
+            <h3 class="font-bold text-xs md:text-sm text-text-main">Passaportes e Vistos</h3>
+            <p class="text-[11px] text-text-muted">Submissão eletrónica de documentos com pré-análise e validação inteligente.</p>
           </div>
-
+          <div class="bg-white border border-border-subtle p-5 rounded-xl shadow-sm space-y-2 hover:border-primary transition-all cursor-pointer" onclick="openLoginModal()">
+            <span class="material-symbols-outlined text-primary text-2xl">gavel</span>
+            <h3 class="font-bold text-xs md:text-sm text-text-main">Atos Notariais</h3>
+            <p class="text-[11px] text-text-muted">Procurações, certidões de nascimento e registos civis automatizados.</p>
+          </div>
         </div>
       </section>
 
-      <section id="page-perfil-cidadao" class="page space-y-6 animate-fade-in">
-        
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border-subtle pb-4">
-          <div>
-            <h2 class="font-bold text-xl text-primary flex items-center gap-2">
-              <span class="material-symbols-outlined text-2xl">badge</span> 
-              Ficha de Inscrição Consular Digital
-            </h2>
-            <p class="text-xs text-text-muted">Consulte e atualize os seus dados de identificação registados na Embaixada na Bélgica.</p>
-          </div>
-          <div class="bg-emerald-100 text-emerald-800 border border-emerald-200 px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1">
-            <span class="material-symbols-outlined text-sm">gpp_good</span> Perfil Verificado via IA
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          
-          <div class="lg:col-span-8 space-y-6">
-            <div class="bg-surface border border-border-subtle p-6 rounded-2xl shadow-sm space-y-6">
-              
-              <div>
-                <h3 class="text-xs font-extrabold uppercase tracking-wider text-primary border-b border-slate-100 pb-2 mb-4 flex items-center gap-1.5">
-                  <span class="material-symbols-outlined text-sm">person</span> Informação de Identificação
-                </h3>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div class="space-y-1">
-                    <label class="text-[10px] font-bold text-text-muted uppercase">Nome Completo</label>
-                    <input type="text" value="Endson dos Santos" disabled class="w-full bg-slate-50 border border-border-subtle rounded-xl text-xs px-3 py-2 text-text-main font-semibold focus:outline-none">
-                  </div>
-                  <div class="space-y-1">
-                    <label class="text-[10px] font-bold text-text-muted uppercase">Email Eletrónico</label>
-                    <input type="email" value="endson.santos@exemplo.com" disabled class="w-full bg-slate-50 border border-border-subtle rounded-xl text-xs px-3 py-2 text-text-main font-semibold focus:outline-none">
-                  </div>
-                  <div class="space-y-1">
-                    <label class="text-[10px] font-bold text-text-muted uppercase">Nº Passaporte Ativo</label>
-                    <input type="text" value="STP002931A" disabled class="w-full bg-slate-50 border border-border-subtle rounded-xl text-xs px-3 py-2 font-mono text-text-main font-bold focus:outline-none">
-                  </div>
-                  <div class="space-y-1">
-                    <label class="text-[10px] font-bold text-text-muted uppercase">Nº Inscrição Consular</label>
-                    <input type="text" value="IC-8821-BRU" disabled class="w-full bg-slate-50 border border-border-subtle rounded-xl text-xs px-3 py-2 font-mono text-secondary font-bold focus:outline-none">
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <h3 class="text-xs font-extrabold uppercase tracking-wider text-primary border-b border-slate-100 pb-2 mb-4 flex items-center gap-1.5">
-                  <span class="material-symbols-outlined text-sm">home_pin</span> Residência no Estrangeiro e Emergência
-                </h3>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div class="space-y-1 sm:col-span-2">
-                    <label class="text-[10px] font-bold text-text-muted uppercase">Morada de Residência Registada</label>
-                    <input type="text" value="Avenue Louise 120, 1050 Bruxelles, Belgique" id="perfil-morada" class="w-full border border-border-subtle rounded-xl text-xs px-3 py-2 text-text-main focus:ring-primary focus:border-primary">
-                    <p class="text-[10px] text-text-muted italic">Válido para utentes residentes na jurisdição da Embaixada: Bélgica, França, Países Baixos, Luxemburgo ou Reino Unido.</p>
-                  </div>
-                  <div class="space-y-1">
-                    <label class="text-[10px] font-bold text-text-muted uppercase">Contacto Telefónico</label>
-                    <input type="text" value="+32 491 23 45 67" id="perfil-telefone" class="w-full border border-border-subtle rounded-xl text-xs px-3 py-2 text-text-main focus:ring-primary focus:border-primary">
-                  </div>
-                  <div class="space-y-1">
-                    <label class="text-[10px] font-bold text-text-muted uppercase">Contacto de Emergência / Familiar</label>
-                    <input type="text" value="Taynara de Oliveira (+32 491 98 76 54)" id="perfil-emergencia" class="w-full border border-border-subtle rounded-xl text-xs px-3 py-2 text-text-main focus:ring-primary focus:border-primary">
-                  </div>
-                </div>
-              </div>
-
-              <div class="pt-2 border-t border-border-subtle flex justify-end">
-                <button onclick="saveProfileChanges()" class="bg-primary hover:bg-primary-light text-white text-xs font-bold px-5 py-2 rounded-xl transition-all shadow flex items-center gap-1.5">
-                  <span class="material-symbols-outlined text-sm">save</span> Guardar Dados de Residência
-                </button>
-              </div>
-
-            </div>
-          </div>
-
-          <div class="lg:col-span-4 space-y-4">
-            
-            <div class="bg-gradient-to-br from-secondary to-amber-950 text-white p-5 rounded-2xl shadow-md relative overflow-hidden group">
-              <div class="absolute -right-6 -bottom-6 text-white/5 font-bold text-9xl pointer-events-none select-none">STP</div>
-              <div class="flex justify-between items-start mb-6">
-                <div>
-                  <p class="text-[9px] uppercase font-bold tracking-widest text-amber-200">República Democrática de</p>
-                  <h4 class="font-bold text-xs tracking-wider">São Tomé e Príncipe</h4>
-                </div>
-                <span class="material-symbols-outlined text-amber-300 text-2xl">workspace_premium</span>
-              </div>
-              
-              <div class="space-y-3">
-                <div>
-                  <p class="text-[9px] text-amber-200/70 uppercase">Titular</p>
-                  <p class="text-sm font-bold tracking-wide">Endson dos Santos</p>
-                </div>
-                <div class="grid grid-cols-2 gap-2">
-                  <div>
-                    <p class="text-[9px] text-amber-200/70 uppercase">Jurisdição</p>
-                    <p class="text-[11px] font-semibold">Bélgica / UE</p>
-                  </div>
-                  <div>
-                    <p class="text-[9px] text-amber-200/70 uppercase">Validade</p>
-                    <p class="text-[11px] font-semibold">31 Dez 2028</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="bg-surface border border-border-subtle p-4 rounded-xl shadow-sm space-y-2.5 text-xs text-text-muted">
-              <h4 class="font-bold text-text-main flex items-center gap-1"><span class="material-symbols-outlined text-primary text-sm">gavel</span> Regulamento GDPR</h4>
-              <p class="leading-relaxed text-[11px]">Em conformidade com os princípios de **limitação da finalidade** e **portabilidade dos dados**, os seus ficheiros e registos biométricos são encriptados na infraestrutura consular e nunca partilhados com terceiros.</p>
-            </div>
-
-          </div>
-
-        </div>
-      </section>
-
-      <section id="page-backoffice" class="page space-y-6 animate-fade-in">
-        
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border-subtle pb-4">
-          <div>
-            <h2 class="font-bold text-xl text-primary flex items-center gap-2">
-              <span class="material-symbols-outlined text-2xl">shield_person</span> 
-              Painel de Controlo Administrativo & Triagem Automatizada
-            </h2>
-            <p class="text-xs text-text-muted">Consulado-Geral de São Tomé e Príncipe em Bruxelas — Módulo de Auditoria Operacional.</p>
-          </div>
-          <div class="flex items-center gap-2">
-            <span class="text-xs bg-slate-100 text-text-main px-3 py-1.5 rounded-xl border border-border-subtle font-medium flex items-center gap-1.5">
-              <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Sistema Online
-            </span>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          
-          <div class="bg-surface border border-border-subtle p-5 rounded-2xl shadow-sm flex items-center justify-between">
-            <div class="space-y-1">
-              <p class="text-[11px] text-text-muted uppercase font-bold tracking-wider">Aprovados / Prontos</p>
-              <p class="text-2xl font-extrabold text-emerald-700" id="kpi-concluidos">41</p>
-            </div>
-            <div class="bg-emerald-50 text-emerald-600 p-2.5 rounded-xl"><span class="material-symbols-outlined text-xl">task_alt</span></div>
-          </div>
-
-          <div class="bg-surface border border-border-subtle p-5 rounded-2xl shadow-sm flex items-center justify-between">
-            <div class="space-y-1">
-              <p class="text-[11px] text-text-muted uppercase font-bold tracking-wider">Aguardando Revisão</p>
-              <p class="text-2xl font-extrabold text-amber-600" id="kpi-pendentes-count">14</p>
-            </div>
-            <div class="bg-amber-50 text-amber-600 p-2.5 rounded-xl"><span class="material-symbols-outlined text-xl">hourglass_top</span></div>
-          </div>
-
-          <div class="bg-surface border border-border-subtle p-5 rounded-2xl shadow-sm flex items-center justify-between">
-            <div class="space-y-1">
-              <p class="text-[11px] text-text-muted uppercase font-bold tracking-wider">Pedidos Rejeitados</p>
-              <p class="text-2xl font-extrabold text-slate-700">5</p>
-            </div>
-            <div class="bg-slate-100 text-slate-600 p-2.5 rounded-xl"><span class="material-symbols-outlined text-xl">cancel</span></div>
-          </div>
-
-          <div class="bg-surface border border-border-subtle p-5 rounded-2xl shadow-sm flex items-center justify-between">
-            <div class="space-y-1">
-              <p class="text-[11px] text-text-muted uppercase font-bold tracking-wider">Inconsistências Críticas</p>
-              <p class="text-2xl font-extrabold text-status-danger-text">2</p>
-            </div>
-            <div class="bg-status-danger-bg text-status-danger-text p-2.5 rounded-xl"><span class="material-symbols-outlined text-xl">gpp_maybe</span></div>
-          </div>
-
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          
-          <div class="lg:col-span-8 space-y-4">
-            
-            <div class="bg-surface border border-border-subtle p-4 rounded-xl shadow-sm space-y-3">
-              <div class="flex items-center justify-between">
-                <h4 class="text-xs font-bold uppercase tracking-wider text-text-muted">Distribuição Estatística dos Processos</h4>
-                <span class="text-[11px] font-semibold text-primary">Total: 62 Atos Analisados</span>
-              </div>
-              <div class="w-full h-3 bg-slate-100 rounded-full flex overflow-hidden">
-                <div class="bg-emerald-600 h-full" style="width: 66%" title="Aprovados (66%)"></div>
-                <div class="bg-amber-500 h-full" style="width: 22%" title="Pendentes (22%)"></div>
-                <div class="bg-slate-500 h-full" style="width: 9%" title="Recusados (9%)"></div>
-                <div class="bg-rose-600 h-full" style="width: 3%" title="Fraudes (3%)"></div>
-              </div>
-              <div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-[10px] font-medium text-text-muted pt-1">
-                <div class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-emerald-600"></span> Aprovados (41)</div>
-                <div class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-amber-500"></span> Pendentes (14)</div>
-                <div class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-slate-500"></span> Recusados (5)</div>
-                <div class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-rose-600"></span> Alertas IA (2)</div>
-              </div>
-            </div>
-
-            <div class="bg-surface border border-border-subtle p-4 rounded-xl shadow-sm flex flex-col sm:flex-row gap-3 justify-between items-center">
-              <div class="relative w-full sm:w-72">
-                <span class="material-symbols-outlined absolute left-3 top-2.5 text-text-muted text-sm">search</span>
-                <input type="text" id="admin-search" onkeyup="searchAdminTable()" placeholder="Filtrar por nome de utente ou ID..." class="w-full pl-9 pr-3 py-1.5 border border-border-subtle rounded-xl text-xs focus:ring-primary focus:border-primary">
-              </div>
-              <div class="flex gap-2 w-full sm:w-auto">
-                <select id="filter-status-admin" onchange="filterAdminTable()" class="text-xs border border-border-subtle rounded-xl py-1.5 px-3 focus:ring-primary focus:border-primary bg-white text-text-main font-medium">
-                  <option value="todos">Todos os Estados</option>
-                  <option value="Pendente">Pendentes</option>
-                  <option value="Em Revisão">Em Revisão</option>
-                  <option value="Aprovado">Aprovados</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="bg-surface border border-border-subtle rounded-xl shadow-sm overflow-hidden">
-              <div class="overflow-x-auto">
-                <table class="w-full text-left text-xs border-collapse" id="admin-table-processes">
-                  <thead>
-                    <tr class="bg-slate-50 border-b border-border-subtle text-text-muted uppercase text-[10px] font-bold">
-                      <th class="p-3">ID / Utente</th>
-                      <th class="p-3">Ato Consular</th>
-                      <th class="p-3">Motor OCR (Grau de Certeza)</th>
-                      <th class="p-3">Estado</th>
-                      <th class="p-3 text-right">Ação</th>
-                    </tr>
-                  </thead>
-                  <tbody class="divide-y divide-border-subtle text-text-main">
-                    <tr class="hover:bg-slate-50/80 transition-all row-processo">
-                      <td class="p-3">
-                        <span class="font-mono text-[10px] bg-slate-100 px-1.5 py-0.5 rounded text-text-muted font-bold">#STP-9831</span>
-                        <p class="font-bold class-nome mt-1 text-slate-900">Manuel dos Santos Espírito</p>
-                      </td>
-                      <td class="p-3 font-medium">Passaporte Ordinário</td>
-                      <td class="p-3">
-                        <div class="flex items-center gap-1.5">
-                          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-                          <span class="font-semibold text-emerald-700">98% Match (Seguro)</span>
-                        </div>
-                      </td>
-                      <td class="p-3"><span class="status-badge px-2.5 py-1 rounded-full bg-amber-50 text-amber-800 border border-amber-200 text-[10px] font-bold">Pendente</span></td>
-                      <td class="p-3 text-right space-x-1 whitespace-nowrap">
-                        <button onclick="approveRowAdvanced(this, 'Aprovado')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all shadow-sm">Aprovar</button>
-                        <button onclick="approveRowAdvanced(this, 'Recusado')" class="bg-rose-600 hover:bg-rose-700 text-white px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all shadow-sm">Recusar</button>
-                      </td>
-                    </tr>
-                    <tr class="hover:bg-slate-50/80 transition-all row-processo">
-                      <td class="p-3">
-                        <span class="font-mono text-[10px] bg-slate-100 px-1.5 py-0.5 rounded text-text-muted font-bold">#STP-4412</span>
-                        <p class="font-bold class-nome mt-1 text-slate-900">Amélia Rita da Costa</p>
-                      </td>
-                      <td class="p-3 font-medium">Visto de Turismo</td>
-                      <td class="p-3">
-                        <div class="flex items-center gap-1.5">
-                          <span class="w-2 h-2 rounded-full bg-rose-500"></span>
-                          <span class="font-semibold text-rose-700">Metadados Divergentes (42%)</span>
-                        </div>
-                      </td>
-                      <td class="p-3"><span class="status-badge px-2.5 py-1 rounded-full bg-orange-50 text-orange-800 border border-orange-200 text-[10px] font-bold">Em Revisão</span></td>
-                      <td class="p-3 text-right space-x-1 whitespace-nowrap">
-                        <button onclick="approveRowAdvanced(this, 'Aprovado')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all shadow-sm">Aprovar</button>
-                        <button onclick="approveRowAdvanced(this, 'Recusado')" class="bg-rose-600 hover:bg-rose-700 text-white px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all shadow-sm">Recusar</button>
-                      </td>
-                    </tr>
-                    <tr class="hover:bg-slate-50/80 transition-all row-processo">
-                      <td class="p-3">
-                        <span class="font-mono text-[10px] bg-slate-100 px-1.5 py-0.5 rounded text-text-muted font-bold">#STP-1102</span>
-                        <p class="font-bold class-nome mt-1 text-slate-900">Carlos Edmilson Delgado</p>
-                      </td>
-                      <td class="p-3 font-medium">Procuração Consular</td>
-                      <td class="p-3">
-                        <div class="flex items-center gap-1.5">
-                          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-                          <span class="font-semibold text-emerald-700">95% Reconhecimento OK</span>
-                        </div>
-                      </td>
-                      <td class="p-3"><span class="status-badge px-2.5 py-1 rounded-full bg-amber-50 text-amber-800 border border-amber-200 text-[10px] font-bold">Pendente</span></td>
-                      <td class="p-3 text-right space-x-1 whitespace-nowrap">
-                        <button onclick="approveRowAdvanced(this, 'Aprovado')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all shadow-sm">Aprovar</button>
-                        <button onclick="approveRowAdvanced(this, 'Recusado')" class="bg-rose-600 hover:bg-rose-700 text-white px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all shadow-sm">Recusar</button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-
-          <div class="lg:col-span-4 space-y-4">
-            <div class="bg-surface border border-border-subtle p-4 rounded-xl shadow-sm space-y-4">
-              <div class="flex items-center justify-between border-b border-border-subtle pb-2">
-                <h3 class="font-bold text-xs md:text-sm text-text-main flex items-center gap-1.5">
-                  <span class="material-symbols-outlined text-primary text-lg">calendar_today</span> Agenda Diária Presencial
-                </h3>
-                <span class="text-[10px] bg-secondary text-white px-2 py-0.5 rounded-md font-bold">Hoje</span>
-              </div>
-
-              <div class="space-y-2 max-h-[340px] overflow-y-auto custom-scroll pr-1">
-                
-                <div class="p-3 border border-border-subtle rounded-xl bg-slate-50/60 flex items-start justify-between gap-2">
-                  <div class="space-y-0.5">
-                    <span class="text-[9px] font-extrabold bg-slate-200 text-slate-800 px-1.5 py-0.5 rounded">09:30</span>
-                    <h5 class="font-bold text-xs text-slate-900">Filomena da Fonseca</h5>
-                    <p class="text-[10px] text-text-muted">Biometria Passaporte</p>
-                  </div>
-                  <button onclick="confirmAttendance(this)" class="bg-white hover:bg-emerald-50 border border-border-subtle hover:border-emerald-200 p-1 rounded-lg text-emerald-600 transition-all flex items-center justify-center">
-                    <span class="material-symbols-outlined text-base">check</span>
-                  </button>
-                </div>
-
-                <div class="p-3 border border-border-subtle rounded-xl bg-slate-50/60 flex items-start justify-between gap-2">
-                  <div class="space-y-0.5">
-                    <span class="text-[9px] font-extrabold bg-slate-200 text-slate-800 px-1.5 py-0.5 rounded">11:00</span>
-                    <h5 class="font-bold text-xs text-slate-900">Juvêncio Trovoada</h5>
-                    <p class="text-[10px] text-text-muted">Levantamento de Visto</p>
-                  </div>
-                  <button onclick="confirmAttendance(this)" class="bg-white hover:bg-emerald-50 border border-border-subtle hover:border-emerald-200 p-1 rounded-lg text-emerald-600 transition-all flex items-center justify-center">
-                    <span class="material-symbols-outlined text-base">check</span>
-                  </button>
-                </div>
-
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-        <div class="bg-surface border border-border-subtle p-4 rounded-xl shadow-sm space-y-2">
-          <h3 class="font-bold text-xs md:text-sm text-text-main flex items-center gap-1.5">
-            <span class="material-symbols-outlined text-text-muted text-lg">history_toggle_off</span> Logs de Auditoria do Sistema (Rastreabilidade GDPR)
-          </h3>
-          <div class="text-[11px] text-text-muted space-y-2 font-mono" id="audit-log-container">
-            <div class="flex items-center gap-2 border-b border-slate-100 pb-1">
-              <span class="text-slate-400">21:09:25</span>
-              <span class="bg-blue-100 text-blue-800 px-1 rounded font-bold text-[9px]">SISTEMA</span>
-              <span>Motor OCR atualizado para validação de dados de passaporte.</span>
-            </div>
-          </div>
-        </div>
-
-      </section>
-    </main>
+      </main>
   </div>
 
-  <footer class="bg-slate-900 text-slate-400 border-t border-slate-800 text-center py-4 px-4 text-xs">
-    <p>© 2026 Direção Geral dos Assuntos Consulares — R.D.S.T.P. Todos os direitos reservados.</p>
-  </footer>
+  <div id="login-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white w-full max-w-md rounded-2xl shadow-xl overflow-hidden border border-border-subtle animate-fade-in space-y-5 p-6">
+      <div class="flex justify-between items-start">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-primary">lock</span>
+          <div>
+            <h3 class="font-bold text-sm text-text-main">Autenticação Consular Única</h3>
+            <p class="text-[10px] text-text-muted">Selecione o seu perfil funcional para aceder ao ambiente correto.</p>
+          </div>
+        </div>
+        <button onclick="closeLoginModal()" class="text-text-muted hover:text-text-main"><span class="material-symbols-outlined text-sm">close</span></button>
+      </div>
 
-  <script src="js/navigation.js"></script>
-  <script src="js/chat.js"></script>
-  <script src="js/documents.js"></script>
-  <script src="js/payment.js"></script>
-  <script src="js/app.js"></script>
+      <div class="space-y-3">
+        <label class="text-[10px] font-bold text-text-muted uppercase tracking-wider">Escolha o Perfil de Entrada</label>
+        
+        <div onclick="selectLoginProfile('cidadao')" class="p-3 border border-border-subtle rounded-xl hover:border-primary hover:bg-slate-50 transition-all cursor-pointer flex items-center gap-3 group">
+          <span class="material-symbols-outlined text-primary bg-slate-100 p-2 rounded-lg group-hover:bg-emerald-50">person</span>
+          <div>
+            <h4 class="font-bold text-xs text-text-main">Área do Cidadão (Utente)</h4>
+            <p class="text-[10px] text-text-muted">Consultar os meus processos e gerir dados de residência.</p>
+          </div>
+        </div>
+
+        <div onclick="selectLoginProfile('staff')" class="p-3 border border-border-subtle rounded-xl hover:border-primary hover:bg-slate-50 transition-all cursor-pointer flex items-center gap-3 group">
+          <span class="material-symbols-outlined text-amber-600 bg-slate-100 p-2 rounded-lg group-hover:bg-amber-50">support_agent</span>
+          <div>
+            <h4 class="font-bold text-xs text-text-main">Módulo do Funcionário Consular</h4>
+            <p class="text-[10px] text-text-muted">Validar dados regionais e gerir a fila de análise.</p>
+          </div>
+        </div>
+
+        <div onclick="selectLoginProfile('admin')" class="p-3 border border-border-subtle rounded-xl hover:border-primary hover:bg-slate-50 transition-all cursor-pointer flex items-center gap-3 group">
+          <span class="material-symbols-outlined text-rose-600 bg-slate-100 p-2 rounded-lg group-hover:bg-rose-50">shield_person</span>
+          <div>
+            <h4 class="font-bold text-xs text-text-main">Administrador de Infraestrutura</h4>
+            <p class="text-[10px] text-text-muted">Controlo total de logs de segurança, estatísticas globais e KPIs.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </body>
 </html>
+<script src="js/auth.js"></script>
+<script src="js/app.js"></script>
+<script src="js/documents.js"></script>
